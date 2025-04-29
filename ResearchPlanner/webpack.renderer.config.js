@@ -1,4 +1,6 @@
 const rules = require("./webpack.rules");
+const path = require("path");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 rules.push({
   test: /\.css$/,
@@ -17,8 +19,19 @@ rules.push({
 });
 
 module.exports = {
-  // Put your normal webpack config below here
   module: {
     rules,
   },
+  output: {
+    publicPath: '/',
+  },
+  devServer: {
+    historyApiFallback: true
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+       template: path.resolve(__dirname, 'src/index.html'),
+       publicPath: '/',
+    })
+ ]
 };
