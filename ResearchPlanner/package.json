@@ -51,15 +51,18 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@supabase/supabase-js": "^2.49.4",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/forms": "^0.5.7",
     "@tailwindcss/typography": "^0.5.13",
     "@testing-library/react": "^16.3.0",
     "@types/react-router-dom": "^5.3.3",
     "boxicons": "^2.1.4",
+    "dotenv": "^16.5.0",
     "electron-squirrel-startup": "^1.0.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^7.5.3"
+    "react-router-dom": "^7.5.3",
+    "yarn": "^1.22.22"
   }
 }

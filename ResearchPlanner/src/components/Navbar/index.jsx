@@ -9,7 +9,7 @@ export default function Navbar() {
         <div className="flex flex-col w-56 bg-white overflow-hidden">
           <ul className="flex flex-col py-4">
             <li>
-              <Link to="/" className="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+              <Link to="/home" className="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
                 <span className="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400">
                 </span>
                 <span className="text-3xl font-medium">Home</span>
@@ -24,12 +24,12 @@ export default function Navbar() {
               </Link>
             </li>
             <li>
-              <a href="#" className="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+              <Link to="/home" className="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
                 <span className="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400">
                   <i className="bx bx-user"></i>
                 </span>
                 <span className="text-sm font-medium">Perfil</span>
-              </a>
+              </Link>
             </li>
             <li>
               <a href="#" className="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
