@@ -9,10 +9,8 @@ const App = () => {
   return (
     <HashRouter>
       <Routes>
-        {/* Página de login sem a Navbar */}
         <Route path="/" element={<Login />} />
         
-        {/* Páginas protegidas com a Navbar */}
         <Route
           path="/*"
           element={

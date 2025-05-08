@@ -3,7 +3,7 @@ import '../../index.css';
 import { useNavigate } from 'react-router-dom'; 
 import { validateLogin, addUser } from '../../data/user.js';
 
-const Login = () => {
+export default function Login() {
     const navigate = useNavigate();
     const [loginEmail, setLoginEmail] = React.useState('');
     const [loginPassword, setLoginPassword] = React.useState('');
@@ -118,5 +118,3 @@ const Login = () => {
         </div>
     );
 };
-
-export default Login;
