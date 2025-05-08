@@ -1,6 +1,15 @@
 const rules = require("./webpack.rules");
 const path = require("path");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const dotenv = require('dotenv');
+const webpack = require('webpack');
+
+const env = dotenv.config().parsed;
+
+const envKeys = Object.keys(env).reduce((prev, next) => {
+  prev[`process.env.${next}`] = JSON.stringify(env[next]);
+  return prev;
+}, {});
 
 rules.push({
   test: /\.css$/,
@@ -32,6 +41,7 @@ module.exports = {
     new HtmlWebpackPlugin({
        template: path.resolve(__dirname, 'src/index.html'),
        publicPath: '/',
-    })
+    }),
+    new webpack.DefinePlugin(envKeys),
  ]
 };

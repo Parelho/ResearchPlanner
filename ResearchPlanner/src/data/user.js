@@ -1,0 +1,45 @@
+import { supabase } from "./supabaseClient.js";
+
+export async function validateLogin(email, password) {
+    try {
+        const { data, error } = await supabase
+            .from("users")
+            .select("*")
+            .eq("email", email)
+            .eq("password", password)
+            // .single();
+
+        if (error || !data) {
+            console.error("Login failed:", error?.message || "No matching user");
+            return false;
+        }
+
+        return true;
+    } catch (err) {
+        console.error("Unexpected error during login:", err);
+        return false;
+    }
+}
+
+export async function addUser(email, password) {
+    try {
+        const { data, error } = await supabase
+            .from("users")
+            .insert([{ email, password }]);
+
+        console.log("Inserted data:", data); // Log de dados inseridos
+        console.log("Error:", error); // Log de erros
+
+        if (error) {
+            console.error("Error adding user:", error.message);
+            return false;
+        }
+
+        return true;
+    } catch (err) {
+        console.error("Unexpected error while adding user:", err);
+        return false;
+    }
+}
+
+
