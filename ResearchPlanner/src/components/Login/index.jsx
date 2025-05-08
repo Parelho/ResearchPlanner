@@ -21,15 +21,15 @@ const Login = () => {
         await validateLogin(loginEmail, loginPassword)
             .then((success) => {
                 if (success) {
-                    alert('Login successful!');
+                    // alert('Login successful!');
                     navigate('/home');
                 } else {
-                    alert('Invalid email or password!');
+                    // alert('Invalid email or password!');
                 }
             })
             .catch((error) => {
                 console.error('Login error:', error);
-                alert('An unexpected error occurred.');
+                // alert('An unexpected error occurred.');
             });
     };
 
@@ -37,16 +37,16 @@ const Login = () => {
 
     const handleSignup = async () => {
         if (signupPassword !== signupConfirmPassword) {
-            alert('Passwords do not match!');
+            // alert('Passwords do not match!');
         } else {
             await addUser(signupEmail, signupPassword)
                 .then(() => {
-                    alert('Sign Up successful!');
+                    // alert('Sign Up successful!');
                     navigate('/home');
                 })
                 .catch((error) => {
                     console.error('Sign Up error:', error);
-                    alert('An error occurred during sign up.');
+                    // alert('An error occurred during sign up.');
                 });
         }
     };

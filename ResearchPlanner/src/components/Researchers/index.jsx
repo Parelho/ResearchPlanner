@@ -23,10 +23,9 @@ export default function Researchers() {
         }
     };
 
-
     return (
         <div className="p-4 space-y-4">
-            <label className="block text-xl">
+            <h2 className="text-xl">
                 Nome do pesquisador
                 <input
                     name="researcherName"
@@ -34,9 +33,9 @@ export default function Researchers() {
                     onChange={(e) => setResearcherName(e.target.value)}
                     className="block mt-1 p-2 border rounded"
                 />
-            </label>
+            </h2>
 
-            <label className="block text-xl">
+            <h2 className="text-xl">
                 Descrição
                 <input
                     name="description"
@@ -44,9 +43,9 @@ export default function Researchers() {
                     onChange={(e) => setDescription(e.target.value)}
                     className="block mt-1 p-2 border rounded"
                 />
-            </label>
+            </h2>
 
-            <label className="block text-xl">
+            <h2 className="text-xl">
                 Habilidades
                 <input
                     name="skills"
@@ -54,7 +53,7 @@ export default function Researchers() {
                     onChange={(e) => setSkills(e.target.value)}
                     className="block mt-1 p-2 border rounded w-full"
                 />
-            </label>
+            </h2>
 
             <button
                 onClick={handleSubmit}
