@@ -1,9 +1,9 @@
 import React from 'react';
 import '../../index.css';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 import { validateLogin, addUser } from '../../data/user.js';
 
-export default function Login() {
+const Login = () => {
     const navigate = useNavigate();
     const [loginEmail, setLoginEmail] = React.useState('');
     const [loginPassword, setLoginPassword] = React.useState('');
@@ -32,8 +32,8 @@ export default function Login() {
                 alert('An unexpected error occurred.');
             });
     };
-    
-    
+
+
 
     const handleSignup = async () => {
         if (signupPassword !== signupConfirmPassword) {
@@ -118,3 +118,5 @@ export default function Login() {
         </div>
     );
 };
+
+export default Login;

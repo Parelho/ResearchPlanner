@@ -1,13 +1,28 @@
 import React, { useState } from "react";
+import { saveResearcher } from "../../data/researcher";
+import { getManager } from "../../data/managerStore.js";
 
 export default function Researchers() {
     const [researcherName, setResearcherName] = useState("");
     const [description, setDescription] = useState("");
+    const [skills, setSkills] = useState("");
 
-    const handleSubmit = () => {
-        console.log("Researcher Name: ", researcherName);
-        console.log("Description: ", description);
+    const handleSubmit = async () => {
+        const skillsArray = skills
+            .split(",")
+            .map((skill) => skill.trim())
+            .filter((skill) => skill.length > 0);
+
+        var manager = getManager();
+
+        const success = await saveResearcher(manager, researcherName, description, skillsArray);
+        if (success) {
+            console.log("Saved successfully!");
+        } else {
+            console.error("Save failed.");
+        }
     };
+
 
     return (
         <div className="p-4 space-y-4">
@@ -28,6 +43,16 @@ export default function Researchers() {
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                     className="block mt-1 p-2 border rounded"
+                />
+            </label>
+
+            <label className="block text-xl">
+                Habilidades
+                <input
+                    name="skills"
+                    value={skills}
+                    onChange={(e) => setSkills(e.target.value)}
+                    className="block mt-1 p-2 border rounded w-full"
                 />
             </label>
 

@@ -1,4 +1,5 @@
 import { supabase } from "./supabaseClient.js";
+import { setManager } from "./managerStore.js";
 
 export async function validateLogin(email, password) {
     try {
@@ -7,12 +8,15 @@ export async function validateLogin(email, password) {
             .select("*")
             .eq("email", email)
             .eq("password", password)
-            // .single();
+        // .single();
 
         if (error || !data) {
             console.error("Login failed:", error?.message || "No matching user");
             return false;
         }
+
+        setManager(data[0].id);
+        // console.log(data[0].id);
 
         return true;
     } catch (err) {
@@ -41,5 +45,3 @@ export async function addUser(email, password) {
         return false;
     }
 }
-
-
