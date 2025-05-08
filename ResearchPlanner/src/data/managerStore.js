@@ -1,9 +1,9 @@
 let manager = 0;
 
 export const setManager = (id) => {
-    manager = id;
+    localStorage.setItem("manager", id);
 };
 
 export const getManager = () => {
-    return manager;
+    return parseInt(localStorage.getItem("manager"));
 };
