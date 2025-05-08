@@ -39,9 +39,20 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-       template: path.resolve(__dirname, 'src/index.html'),
-       publicPath: '/',
+      template: path.resolve(__dirname, 'src/index.html'),
+      publicPath: '/',
+      meta: {
+        'Content-Security-Policy': {
+          'http-equiv': 'Content-Security-Policy',
+          content: `
+            default-src 'self';
+            style-src 'self' https://unpkg.com 'unsafe-inline';
+            connect-src 'self' https://*.supabase.co;
+            script-src 'self' 'unsafe-inline';
+          `.replace(/\s{2,}/g, ' ').trim()
+        }
+      }
     }),
     new webpack.DefinePlugin(envKeys),
- ]
+  ]
 };
