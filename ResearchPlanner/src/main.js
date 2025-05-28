@@ -1,5 +1,6 @@
 const { app, BrowserWindow, session } = require('electron');
 const path = require('node:path');
+const { shell } = require('electron');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -28,10 +29,15 @@ app.whenReady().then(() => {
     const csp = [
       "default-src 'self';",
       "style-src 'self' https://unpkg.com 'unsafe-inline';",
-      "connect-src 'self' https://*.supabase.co;",
-      "font-src 'self' https://unpkg.com;", // Allow fonts from unpkg
+      // changed to make the pdf export work
+      "connect-src 'self' https://*.supabase.co https://unpkg.com;",
+      // "connect-src 'self' https://*.supabase.co;", //default
+      "font-src 'self' https://unpkg.com;",
+      // "font-src 'self' https://unpkg.com;", // default
+      "img-src 'self' data:;",
       "script-src 'self' 'unsafe-inline'" + (isDev ? " 'unsafe-eval';" : ';')
     ].join(' ');
+
 
     callback({
       responseHeaders: {
@@ -55,3 +61,20 @@ app.on('window-all-closed', () => {
     app.quit();
   }
 });
+
+// Open external links in the default browser
+// and prevent navigation within the app
+app.on('web-contents-created', (_, contents) => {
+  contents.setWindowOpenHandler(({ url }) => {
+    shell.openExternal(url);
+    return { action: 'deny' };
+  });
+
+  contents.on('will-navigate', (event, url) => {
+    if (url !== contents.getURL()) {
+      event.preventDefault();
+      shell.openExternal(url);
+    }
+  });
+});
+

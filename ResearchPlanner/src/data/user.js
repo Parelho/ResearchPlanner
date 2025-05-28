@@ -45,3 +45,23 @@ export async function addUser(email, password) {
         return false;
     }
 }
+
+export async function getUserEmail(managerID) {
+    try {
+        const { data, error } = await supabase
+            .from("users")
+            .select("email")
+            .eq("id", managerID)
+            .single();
+
+        if (error) {
+            console.error("Error getting user email:", error.message);
+            return null;
+        }
+
+        return data ? data.email : null;
+    } catch (err) {
+        console.error("Unexpected error while getting user email:", err);
+        return null;
+    }
+}

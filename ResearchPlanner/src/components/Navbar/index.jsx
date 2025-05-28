@@ -23,6 +23,14 @@ export default function Navbar() {
                 <span className="text-sm font-medium">Pesquisadores</span>
               </Link>
             </li>
+            <li>
+              <Link to="/planner" className="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+                <span className="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400">
+                  <i className="bx bxs-book"></i>
+                </span>
+                <span className="text-sm font-medium">Planner</span>
+              </Link>
+            </li>
             {/* <li>
               <Link to="/home" className="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
                 <span className="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400">
@@ -30,7 +38,7 @@ export default function Navbar() {
                 </span>
                 <span className="text-sm font-medium">Perfil</span>
               </Link>
-            </li>
+            </li>*/}
             <li>
               <a href="#" className="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
                 <span className="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400">
@@ -38,7 +46,7 @@ export default function Navbar() {
                 </span>
                 <span className="text-sm font-medium">Logout</span>
               </a>
-            </li> */}
+            </li> 
           </ul>
         </div>
       </div>
