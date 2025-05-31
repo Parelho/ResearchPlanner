@@ -8,7 +8,7 @@ module.exports = {
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
   setupFiles: ['<rootDir>/jest.env.js'],
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+  // setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   // If you don't have a tsconfig.json, provide minimal TS config
   globals: {
     'ts-jest': {
