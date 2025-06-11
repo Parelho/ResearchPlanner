@@ -27,6 +27,11 @@ rules.push({
   ],
 });
 
+rules.push({
+  test: /\.(png|jpe?g|gif|svg)$/i,
+  type: 'asset/resource',
+});
+
 module.exports = {
   module: {
     rules,
