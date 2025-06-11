@@ -6,6 +6,7 @@ export default function Researchers() {
     const [researcherName, setResearcherName] = useState("");
     const [description, setDescription] = useState("");
     const [skills, setSkills] = useState("");
+    const [cost, setCost] = useState(0);
     const [researchersData, setResearchersData] = useState([]);
     const [showModal, setShowModal] = useState(false);
     const [missingFields, setMissingFields] = useState([]);
@@ -29,7 +30,7 @@ export default function Researchers() {
 
         const manager = getManager();
 
-        const success = await saveResearcher(manager, researcherName, description, skillsDB);
+        const success = await saveResearcher(manager, researcherName, description, skillsDB, cost);
         if (success) {
             console.log("Saved successfully!");
             getResearchers();
@@ -37,6 +38,7 @@ export default function Researchers() {
             setResearcherName("");
             setDescription("");
             setSkills("");
+            setCost(0);
         } else {
             console.error("Save failed.");
         }
@@ -96,6 +98,19 @@ export default function Researchers() {
                     />
                 </h2>
 
+                <h2 className="text-xl">
+                    Valor Hora
+                    <input
+                        type="number"
+                        name="cost"
+                        value={cost}
+                        onChange={(e) => setCost(e.target.value)}
+                        className="block mt-1 p-2 border rounded w-full"
+                        step="1"
+                        min="0"
+                    />
+                </h2>
+
                 <button
                     onClick={handleSubmit}
                     className="mt-6 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
@@ -116,6 +131,9 @@ export default function Researchers() {
                                         <p className="text-gray-700">{researcher.description}</p>
                                         <p className="text-gray-600">
                                             <strong>Habilidades:</strong> {researcher.skills.join(", ")}
+                                        </p>
+                                        <p className="text-gray-600">
+                                            <strong>Custo: R$</strong> {researcher.cost} a hora
                                         </p>
                                     </div>
                                     <button

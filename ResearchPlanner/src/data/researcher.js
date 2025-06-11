@@ -1,10 +1,10 @@
 import { supabase } from "./supabaseClient.js";
 
-export async function saveResearcher(manager, name, description, skills) {
+export async function saveResearcher(manager, name, description, skills, cost) {
     try {
         const { data, error } = await supabase
             .from("researchers")
-            .insert([{ manager, name, description, skills }]);
+            .insert([{ manager, name, description, skills, cost }]);
 
         if (error) {
             console.error("Error adding researcher:", error.message);
@@ -22,7 +22,7 @@ export async function getAllResearchersByManager(manager) {
     try {
         const { data, error } = await supabase
             .from("researchers")
-            .select("id, name, description, skills")
+            .select("id, name, description, skills, cost")
             .eq("manager", manager);
 
         if (error) {
