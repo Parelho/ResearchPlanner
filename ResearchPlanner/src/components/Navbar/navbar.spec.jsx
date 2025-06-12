@@ -12,6 +12,7 @@ test("renders Navbar links", () => {
     </MemoryRouter>
   );
 
-  expect(getByText("Home")).toBeInTheDocument();
   expect(getByText("Pesquisadores")).toBeInTheDocument();
+  expect(getByText("Planner")).toBeInTheDocument();
+  expect(getByText("Logout")).toBeInTheDocument();
 });

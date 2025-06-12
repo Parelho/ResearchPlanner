@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from 'react-router-dom';
 import 'boxicons/css/boxicons.min.css';
-import HomeImage from '../../assets/logo.png'
+import HomeImage from '../../assets/logo.png';
 
 export default function Navbar() {
   return (

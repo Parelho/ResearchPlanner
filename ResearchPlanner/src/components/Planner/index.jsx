@@ -10,7 +10,9 @@ export default function Planner() {
     const [projectTitle, setProjectTitle] = useState("");
     const [search, setSearch] = useState("");
     const [selectedResearchers, setSelectedResearchers] = useState([]);
-    const [budget, setBudget] = useState("");
+    const [budget, setBudget] = useState(0);
+    const [multFactor, setMultFactor] = useState(1);
+    const [researcherHours, setResearcherHours] = useState({});
     const [researchersData, setResearchersData] = useState([]);
     const [managerEmail, setManagerEmail] = useState("");
     const [tasks, setTasks] = useState([]);
@@ -59,6 +61,19 @@ export default function Planner() {
     useEffect(() => {
         getResearchers();
     }, []);
+
+    useEffect(() => {
+        let totalCost = 0;
+
+        researchersData
+            .filter(r => selectedResearchers.includes(r.id))
+            .forEach(r => {
+                const hours = researcherHours[r.id] || 0;
+                totalCost += hours * r.cost;
+            });
+
+        setBudget(totalCost * multFactor);
+    }, [researcherHours, multFactor]);
 
     const filteredResearchers = researchersData.filter(r =>
         r.name.toLowerCase().includes(search.toLowerCase())
@@ -255,10 +270,10 @@ export default function Planner() {
 
             <div className="grid grid-cols-2 gap-8">
                 <section>
-                    <h2 className="text-lg font-semibold mb-2">Researchers</h2>
+                    <h2 className="text-lg font-semibold mb-2">Pesquisadores</h2>
                     <input
                         type="text"
-                        placeholder="Search researchers..."
+                        placeholder="Procurar pesquisadores..."
                         value={search}
                         onChange={e => setSearch(e.target.value)}
                         className="w-full mb-3 p-2 border rounded"
@@ -280,20 +295,51 @@ export default function Planner() {
                         ))}
                     </div>
                     <div className="mt-2 font-medium">
-                        <strong>Selected:</strong> {selectedResearchers.length}
+                        <strong>Selecionados:</strong> {selectedResearchers.length}
                     </div>
                 </section>
 
                 <section>
-                    <h2 className="text-lg font-semibold mb-2">Verba</h2>
-                    <input
-                        type="number"
-                        placeholder="Digite a verba disponível"
-                        value={budget}
-                        onChange={e => setBudget(e.target.value)}
-                        className="w-full p-2 border rounded"
-                        min={0}
-                    />
+                    <h2 className="text-lg font-semibold mb-2">Verba: {budget}</h2>
+                    <div className="text-lg font-semibold mb-2 flex gap-2">
+                        <h2>Multiplicador:</h2>
+                        {
+                            <input
+                                type="number"
+                                min={0}
+                                value={multFactor}
+                                onChange={(e) => setMultFactor(e.target.value)}
+                                className="w-20 p-1 border rounded"
+                            />
+                        }
+                    </div>
+
+                    <p>
+                        {
+                            researchersData.filter(r => selectedResearchers.includes(r.id)).map((r, index) => (
+                                <div
+                                    key={r.id}
+                                    className="flex items-center justify-between gap-3 mb-2 w-64"
+                                >
+                                    <span className="font-medium">{r.name}</span>
+                                    <input
+                                        type="number"
+                                        min={0}
+                                        value={researcherHours[r.id] || ""}
+                                        onChange={(e) =>
+                                            setResearcherHours((prev) => ({
+                                                ...prev,
+                                                [r.id]: Number(e.target.value),
+                                            }))
+                                        }
+                                        placeholder="Horas"
+                                        className="w-20 p-1 border rounded"
+                                    />
+                                </div>
+                            ))
+                        }
+                    </p>
+
                 </section>
 
                 <section>
