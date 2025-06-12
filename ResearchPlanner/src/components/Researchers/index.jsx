@@ -63,91 +63,130 @@ export default function Researchers() {
         getResearchers();
     }, []);
 
+    useEffect(() => {
+        if (researcherName.length > 50) {
+            setResearcherName(researcherName.slice(0, 50));
+        }
+    }, [researcherName])
+
     return (
         <div className="p-4 space-y-4">
-            <div>
-                <h1 className="text-2xl font-bold">Adicionar novo pesquisador</h1>
+            <div className="p-4 max-w-8xl mx-auto">
+                <div className="p-1 rounded-2xl bg-gray-900 shadow-lg">
+                    <div className="p-6 rounded-xl bg-gray-100">
 
-                <h2 className="text-xl">
-                    Nome do pesquisador
-                    <input
-                        name="researcherName"
-                        value={researcherName}
-                        onChange={(e) => setResearcherName(e.target.value)}
-                        className="block mt-1 p-2 border rounded"
-                    />
-                </h2>
+                        <h1 className="text-3xl font-bold text-gray-900 mb-6">Adicionar novo pesquisador</h1>
 
-                <h2 className="text-xl">
-                    Descrição
-                    <input
-                        name="description"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        className="block mt-1 p-2 border rounded"
-                    />
-                </h2>
+                        <div className="space-y-4">
 
-                <h2 className="text-xl">
-                    Habilidades
-                    <input
-                        name="skills"
-                        value={skills}
-                        onChange={(e) => setSkills(e.target.value)}
-                        className="block mt-1 p-2 border rounded w-full"
-                    />
-                </h2>
+                            <div>
+                                <label className="block text-gray-700 text-lg mb-1" htmlFor="researcherName">
+                                    Nome do pesquisador
+                                </label>
+                                <input
+                                    id="researcherName"
+                                    name="researcherName"
+                                    value={researcherName}
+                                    onChange={(e) => setResearcherName(e.target.value)}
+                                    className="w-1/3 p-3 rounded-xl bg-white text-gray-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                />
+                            </div>
 
-                <h2 className="text-xl">
-                    Valor Hora
-                    <input
-                        type="number"
-                        name="cost"
-                        value={cost}
-                        onChange={(e) => setCost(e.target.value)}
-                        className="block mt-1 p-2 border rounded w-full"
-                        step="1"
-                        min="0"
-                    />
-                </h2>
+                            <div>
+                                <label className="block text-gray-700 text-lg mb-1" htmlFor="description">
+                                    Descrição
+                                </label>
+                                <textarea
+                                    id="description"
+                                    name="description"
+                                    value={description}
+                                    onChange={(e) => setDescription(e.target.value)}
+                                    className="w-full p-3 rounded-xl bg-white text-gray-900 shadow-sm h-28 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                />
+                            </div>
 
-                <button
-                    onClick={handleSubmit}
-                    className="mt-6 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                >
-                    Adicionar
-                </button>
+                            <div>
+                                <label className="block text-gray-700 text-lg mb-1" htmlFor="skills">
+                                    Habilidades
+                                </label>
+                                <textarea
+                                    id="skills"
+                                    name="skills"
+                                    value={skills}
+                                    onChange={(e) => setSkills(e.target.value)}
+                                    className="w-full p-3 rounded-xl bg-white text-gray-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                />
+                            </div>
+
+                            <div>
+                                <label className="block text-gray-700 text-lg mb-1" htmlFor="cost">
+                                    Valor Hora
+                                </label>
+                                <input
+                                    type="number"
+                                    id="cost"
+                                    name="cost"
+                                    value={cost}
+                                    onChange={(e) => setCost(e.target.value)}
+                                    className="w-16 p-3 rounded-xl bg-white text-gray-900 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    step="1"
+                                    min="0"
+                                />
+                            </div>
+
+                            <button
+                                onClick={handleSubmit}
+                                className="w-full py-3 mt-2 rounded-xl bg-blue-600 text-white font-semibold text-lg hover:bg-blue-700 transition"
+                            >
+                                Adicionar
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <div>
-                <h1 className="text-2xl font-bold">Pesquisadores registrados</h1>
+                <h1 className="text-2xl font-bold mt-12">Pesquisadores registrados</h1>
                 {researchersData.length > 0 ? (
                     <ul className="space-y-4 mt-4">
-                        {researchersData.map((researcher) => (
-                            <li key={researcher.id} className="p-4 border rounded shadow">
-                                <div className="flex justify-between items-start">
-                                    <div>
-                                        <h3 className="text-xl font-semibold">{researcher.name}</h3>
-                                        <p className="text-gray-700">{researcher.description}</p>
-                                        <p className="text-gray-600">
-                                            <strong>Habilidades:</strong> {researcher.skills.join(", ")}
-                                        </p>
-                                        <p className="text-gray-600">
-                                            <strong>Custo: R$</strong> {researcher.cost} a hora
-                                        </p>
-                                    </div>
-                                    <button
-                                        onClick={() => handleDelete(researcher.id)}
-                                        className="ml-4 px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700"
+                        {researchersData.length > 0 ? (
+                            <ul className="space-y-6 mt-6">
+                                {researchersData.map((researcher) => (
+                                    <li
+                                        key={researcher.id}
+                                        className="p-1 rounded-2xl bg-gray-900 shadow-lg"
                                     >
-                                        Deletar
-                                    </button>
-                                </div>
-                            </li>
-                        ))}
+                                        <div className="p-4 rounded-xl bg-gray-100">
+                                            <div className="flex justify-between items-start">
+                                                <div>
+                                                    <h3 className="text-2xl font-bold text-gray-900">{researcher.name}</h3>
+                                                    <p className="mt-2 text-gray-700">{researcher.description}</p>
+                                                    <p className="mt-2 text-gray-600">
+                                                        <strong>Habilidades:</strong> {researcher.skills.join(", ")}
+                                                    </p>
+                                                    <p className="mt-2 text-gray-700">
+                                                        <strong>Custo:</strong> R$ {researcher.cost} / hora
+                                                    </p>
+                                                </div>
+                                                <button
+                                                    onClick={() => handleDelete(researcher.id)}
+                                                    className="ml-4 px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+                                                >
+                                                    Deletar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </li>
+                                ))}
+                            </ul>
+                        ) : (
+                            <p className="text-gray-400 mt-4">Nenhum pesquisador encontrado.</p>
+                        )}
+
                     </ul>
                 ) : (
-                    <p className="mt-2 text-gray-500">Nenhum pesquisador registrado ainda.</p>
+                    <p className="mt-2 text-gray-600">Nenhum pesquisador registrado ainda.</p>
                 )}
             </div>
 

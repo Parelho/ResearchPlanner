@@ -40,11 +40,11 @@ const Login = () => {
 
     // Basic validation
     if (!email || !password) {
-      setLoginError('Please fill in all fields.');
+      setLoginError('Preencha todos os campos.');
       return;
     }
     if (!emailRegex.test(email)) {
-      setLoginError('Please enter a valid email.');
+      setLoginError('Insira um e-mail valido, por favor.');
       return;
     }
 
@@ -54,11 +54,11 @@ const Login = () => {
         setLoginError('');
         navigate('/home');
       } else {
-        setLoginError('Invalid email or password.');
+        setLoginError('E-mail ou senha inválidos.');
       }
     } catch (err) {
       console.error('Login error:', err);
-      setLoginError('An error occurred during login.');
+      setLoginError('Um erro ocorreu durante o login.');
     }
   };
 
@@ -67,15 +67,15 @@ const Login = () => {
 
     // Validation
     if (!email || !password || !confirm) {
-      setSignupError('Please fill in all fields.');
+      setSignupError('Preencha todos os campos, por favor.');
       return;
     }
     if (!emailRegex.test(email)) {
-      setSignupError('Please enter a valid email.');
+      setSignupError('Insira um e-mail válido, por favor.');
       return;
     }
     if (password !== confirm) {
-      setSignupError('Passwords do not match.');
+      setSignupError('As senhas estão diferentes.');
       return;
     }
 
@@ -85,14 +85,14 @@ const Login = () => {
       navigate('/home');
     } catch (err) {
       console.error('Signup error:', err);
-      setSignupError('An error occurred during sign up.');
+      setSignupError('Um erro ocorreu durante o cadastro.');
     }
   };
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center px-6 py-12 bg-gray-50 font-sans">
-      <h1 className="text-4xl font-bold text-gray-800 mb-2">Welcome to Research Planner</h1>
-      <p className="text-gray-600 text-lg mb-10">Plan and organize your research projects effortlessly.</p>
+      <h1 className="text-4xl font-bold text-gray-800 mb-2">Bem-vindo ao Research Planner</h1>
+      <p className="text-gray-600 text-lg mb-10">Planeje e organize os seus projetos de pesquisa com facilidade.</p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12 w-full max-w-4xl">
         {/* Login Section */}
@@ -101,13 +101,13 @@ const Login = () => {
           {loginError && <ErrorMessage message={loginError} />}
           <AuthInput
             type="email"
-            placeholder="Email"
+            placeholder="E-mail"
             value={loginData.email}
             onChange={updateLogin('email')}
           />
           <AuthInput
             type="password"
-            placeholder="Password"
+            placeholder="Senha"
             value={loginData.password}
             onChange={updateLogin('password')}
           />
@@ -125,19 +125,19 @@ const Login = () => {
           {signupError && <ErrorMessage message={signupError} />}
           <AuthInput
             type="email"
-            placeholder="Email"
+            placeholder="E-mail"
             value={signupData.email}
             onChange={updateSignup('email')}
           />
           <AuthInput
             type="password"
-            placeholder="Password"
+            placeholder="Senha"
             value={signupData.password}
             onChange={updateSignup('password')}
           />
           <AuthInput
             type="password"
-            placeholder="Confirm Password"
+            placeholder="Confirme a senha"
             value={signupData.confirm}
             onChange={updateSignup('confirm')}
           />
@@ -145,7 +145,7 @@ const Login = () => {
             onClick={handleSignup}
             className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition"
           >
-            Sign Up
+            Cadastrar
           </button>
         </div>
       </div>
