@@ -5,6 +5,8 @@ import { HashRouter, Routes, Route } from "react-router-dom";
 import Researchers from "./components/Researchers/index.jsx";
 import Login from "./components/Login/index.jsx";
 import Planner from "./components/Planner/index.jsx";
+import ProjectDashboard from "./components/Editor/index.jsx";
+import Projects from "./components/Projects/index.jsx";
 
 const App = () => {
   return (
@@ -22,6 +24,8 @@ const App = () => {
                   <Route path="/home" element={<Home />} />
                   <Route path="/researchers" element={<Researchers />} />
                   <Route path="/planner" element={<Planner />}></Route>
+                  <Route path="/projects" element={<Projects />}></Route>
+                  <Route path="/editor" element={<ProjectDashboard />}></Route>
                 </Routes>
               </div>
             </div>

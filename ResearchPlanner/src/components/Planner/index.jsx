@@ -5,6 +5,7 @@ import { getUserEmail } from "../../data/user.js";
 import GanttChart from "./components/ganttChart.jsx";
 // import * as htmlToImage from "html-to-image";
 import jsPDF from "jspdf";
+import { addProject } from "../../data/project.js";
 
 export default function Planner() {
     const [projectTitle, setProjectTitle] = useState("");
@@ -20,7 +21,8 @@ export default function Planner() {
     const [newTaskDescription, setNewTaskDescription] = useState("");
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [missingFields, setMissingFields] = useState([]);
-    const [continueExport, setContinueExport] = useState(false);
+    const [continueExportOrSave, setContinueExportOrSave] = useState(false);
+    const manager = getManager();
 
 
     const handleAddTask = () => {
@@ -44,7 +46,7 @@ export default function Planner() {
 
     useEffect(() => {
         const fetchData = async () => {
-            const manager = await getManager();
+            // const manager = await getManager();
             const email = await getUserEmail(manager);
             setManagerEmail(email);
             const researchers = await getAllResearchersByManager(manager);
@@ -137,18 +139,19 @@ export default function Planner() {
         const fields = [];
 
         if (!projectTitle.trim()) fields.push("Título do Projeto");
-        if (!budget.trim()) fields.push("Verba");
+        // if (!budget.trim()) fields.push("Verba");
+        if (!budget || budget <= 0) fields.push("Verba");        
         if (selectedResearchers.length === 0) fields.push("Pesquisadores");
         if (tasks.length === 0) fields.push("Tarefas");
 
-        if (fields.length > 0 && !continueExport) {
+        if (fields.length > 0 && !continueExportOrSave) {
             setMissingFields(fields);
             setShowConfirmation(true);
             return;
         }
 
         setShowConfirmation(false);
-        setContinueExport(false);
+        setContinueExportOrSave(false);
 
         exportPdf();
     };
@@ -200,7 +203,7 @@ export default function Planner() {
             pdf.setFontSize(12);
             pdf.text(`Responsável: ${managerEmail}`, margin, y);
             y += 20;
-            pdf.text(`Verba disponível: R$ ${budget || "(não preenchido)"}`, margin, y);
+            pdf.text(`Verba estimada: R$ ${budget || "(não preenchido)"}`, margin, y);
             y += 30;
 
             // reseachers
@@ -242,7 +245,7 @@ export default function Planner() {
             pdf.save(`${projectTitle || "projeto"}.pdf`);
         } catch (error) {
             console.error("Erro ao exportar PDF:", error);
-            alert("Erro ao exportar. Veja o console.");
+            // alert("Erro ao exportar. Veja o console."); TROCAR PARA UM MODAL
         }
     };
 
@@ -254,6 +257,51 @@ export default function Planner() {
             )
         );
     };
+
+    const handleSaveProject = async () => {
+        const fields = [];
+        if (!projectTitle.trim()) fields.push("Título do Projeto");
+        if (!managerEmail) fields.push("Responsável");
+        if (!budget || budget <= 0) fields.push("Verba");
+        if (selectedResearchers.length === 0) fields.push("Pesquisadores");
+        if (tasks.length === 0) fields.push("Tarefas");
+
+        if (fields.length > 0 && !continueExportOrSave) {
+            setMissingFields(fields);
+            setShowConfirmation(true);
+            return;
+        }
+
+        setShowConfirmation(false);
+        setContinueExportOrSave(false);
+
+        saveProject();
+    };
+
+    const saveProject = async () => {
+        const projectData = {
+            title: projectTitle,
+            manager: manager, // ID do gerente
+            cost: budget,
+            researchers: selectedResearchers, // array de IDs
+            tasks: tasks.map(t => ({
+                id: t.id,
+                title: t.title,
+                description: t.description,
+                startDate: t.startDate ? t.startDate.toISOString() : null,
+                duration: t.duration || 1,
+            })),
+        };
+
+        try {
+            await addProject(projectData);
+            // alert("Projeto salvo com sucesso!"); TROCAR PARA UM MODAL
+            // setShowSaveConfirmation(true);
+        } catch (error) {
+            console.error("Erro ao salvar projeto:", error);
+            // alert("Erro ao salvar projeto."); TROCAR PARA UM MODAL
+        }
+    }
 
     return (
         <div className="font-sans p-6 overflow-x-hidden">
@@ -424,7 +472,7 @@ export default function Planner() {
                         onClick={handleExportToPdf}
                         className="mt-4 px-6 py-2 bg-blue-700 text-white rounded hover:bg-blue-800"
                     >
-                        Exportar como PDF
+                        Exportar Texto em PDF
                     </button>
 
                 </section>
@@ -436,7 +484,7 @@ export default function Planner() {
                             <ul className="mb-4 list-disc list-inside text-sm text-gray-700">
                                 {missingFields.map((field, idx) => <li key={idx}>{field}</li>)}
                             </ul>
-                            <p className="mb-4">Deseja exportar o PDF mesmo assim?</p>
+                            <p className="mb-4">Deseja continuar mesmo assim?</p>
                             <div className="flex justify-end gap-4">
                                 <button
                                     onClick={() => setShowConfirmation(false)}
@@ -446,7 +494,7 @@ export default function Planner() {
                                 </button>
                                 <button
                                     onClick={() => {
-                                        setContinueExport(true);
+                                        setContinueExportOrSave(true);
                                         handleExportToPdf();
                                     }}
                                     className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
@@ -457,6 +505,15 @@ export default function Planner() {
                         </div>
                     </div>
                 )}
+
+                <section>
+                    <button
+                        onClick={handleSaveProject}
+                        className="mt-4 px-6 py-2 bg-blue-700 text-white rounded hover:bg-blue-800"
+                    >
+                        Salvar Projeto
+                    </button>
+                </section>
 
 
                 {/* <section>

@@ -34,9 +34,25 @@ export default function Navbar() {
             <li>
               <Link to="/planner" className="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
                 <span className="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400">
-                  <i className="bx bxs-book"></i>
+                  <i className="bx bxs-pencil"></i>
                 </span>
                 <span className="text-sm font-medium">Planner</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/projects" className="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+                <span className="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400">
+                  <i className="bx bxs-folder-open"></i>
+                </span>
+                <span className="text-sm font-medium">Meus Projetos</span>
+              </Link>
+            </li>
+            <li>
+              <Link to="/editor" className="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-gray-800">
+                <span className="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400">
+                  <i className="bx bxs-edit"></i>
+                </span>
+                <span className="text-sm font-medium">Editor de Projetos</span>
               </Link>
             </li>
             {/* <li>
