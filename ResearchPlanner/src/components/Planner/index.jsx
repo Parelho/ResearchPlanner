@@ -369,7 +369,7 @@ export default function Planner() {
                                     key={r.id}
                                     className="flex items-center justify-between gap-3 mb-2 w-64"
                                 >
-                                    <span className="font-medium">{r.name}</span>
+                                    <span className="font-medium">{r.name}: R${r.cost}/hora</span>
                                     <input
                                         type="number"
                                         min={0}
